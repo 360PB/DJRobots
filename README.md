@@ -67,7 +67,7 @@ python app.py --start-page 1 --end-page 2 --start-index 1
 ### 命令行参数说明
 
 - `--start-page`: 起始页码（默认：1）
-- `--end-page`: 结束页码（默认：100）
+- `--end-page`: 结束页码（默认：1）
 - `--start-index`: 文件编号起始值（默认：1）
 
 ## 项目结构
