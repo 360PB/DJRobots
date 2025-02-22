@@ -21,7 +21,7 @@
 
 1. 克隆仓库到本地：
 ```bash
-git clone https://github.com/yourusername/djuu-downloader.git
+git clone https://github.com/360PB/djuu-downloader.git
 cd djuu-downloader
 ```
 
