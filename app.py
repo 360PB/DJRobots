@@ -87,16 +87,21 @@ def download_audio(url, save_path=None, index=None, downloaded_titles=None):
                 logger.info(f"File exists: {save_path}")
                 return
 
-            # 下载音频文件，添加进度条
+            # 下载音频文件，使用改进的进度条显示
             with requests.get(audio_url, stream=True, timeout=30) as response:
                 response.raise_for_status()
                 total_size = int(response.headers.get('content-length', 0))
                 
+                # 使用较短的文件名来避免进度条换行
+                display_name = sanitized_title[:30] + "..." if len(sanitized_title) > 30 else sanitized_title
+                
                 with open(save_path, 'wb') as file, tqdm(
-                    desc=sanitized_title,
+                    desc=display_name,
                     total=total_size,
                     unit='iB',
-                    unit_scale=True
+                    unit_scale=True,
+                    ncols=100,  # 固定进度条宽度
+                    bar_format='{desc:<35}{percentage:3.0f}%|{bar:30}{r_bar}'  # 自定义格式
                 ) as pbar:
                     for data in response.iter_content(chunk_size=8192):
                         file.write(data)
@@ -157,7 +162,7 @@ def batch_download_audios(play_links, start_index=1):
     os.makedirs(downloads_directory, exist_ok=True)
     downloaded_titles = set()
 
-    with ThreadPoolExecutor(max_workers=3) as executor:
+    with ThreadPoolExecutor(max_workers=2) as executor:
         futures = []
         for index, (link, title) in enumerate(play_links, start=start_index):
             save_path = os.path.join(
@@ -172,6 +177,8 @@ def batch_download_audios(play_links, start_index=1):
                 downloaded_titles
             )
             futures.append((future, title))
+            # 添加小延迟以避免进度条重叠
+            time.sleep(0.5)
 
         # 等待所有下载完成并处理异常
         for future, title in futures:
