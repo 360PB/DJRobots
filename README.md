@@ -106,7 +106,7 @@ djuu-downloader/
 
 ## 开源协议
 
-MIT License
+[Apache-2.0](https://github.com/360PB/DJRobots?tab=Apache-2.0-1-ov-file#)
 
 ## 免责声明
 
