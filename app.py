@@ -221,7 +221,7 @@ if __name__ == "__main__":
     # 添加命令行参数解析
     parser = argparse.ArgumentParser(description='Download music from DJUU with custom start index.')
     parser.add_argument('--start-page', type=int, default=1, help='Start page number')
-    parser.add_argument('--end-page', type=int, default=100, help='End page number')
+    parser.add_argument('--end-page', type=int, default=1, help='End page number')
     parser.add_argument('--start-index', type=int, default=1, help='Start index for file naming')
     
     args = parser.parse_args()
